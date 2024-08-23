@@ -4,6 +4,10 @@ const reset = document.querySelector("#reset");
 
 const GRID_WIDTH = 640;
 
+const getRandomNumber = (min, max) => {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+};
+
 const renderGrid = (gridSize = 16) => {
   const grid = new Array(gridSize)
     .fill(0)
@@ -19,6 +23,14 @@ const renderGrid = (gridSize = 16) => {
         box.style.width = `${GRID_WIDTH / gridSize}px`;
         box.style.height = `${GRID_WIDTH / gridSize}px`;
       }
+
+      box.addEventListener("mouseover", () => {
+        if (box.style.backgroundColor) return;
+        box.style.backgroundColor = `rgb(${getRandomNumber(
+          0,
+          255
+        )}, ${getRandomNumber(0, 255)}, ${getRandomNumber(0, 255)})`;
+      });
 
       canvas.appendChild(box);
     });
