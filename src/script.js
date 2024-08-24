@@ -8,6 +8,13 @@ const getRandomNumber = (min, max) => {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 };
 
+const getRandomColor = () => {
+  return `rgb(${getRandomNumber(0, 255)}, ${getRandomNumber(
+    0,
+    255
+  )}, ${getRandomNumber(0, 255)})`;
+};
+
 const renderGrid = (gridSize = 16) => {
   const grid = new Array(gridSize)
     .fill(0)
@@ -25,11 +32,15 @@ const renderGrid = (gridSize = 16) => {
       }
 
       box.addEventListener("mouseover", () => {
-        if (box.style.backgroundColor) return;
-        box.style.backgroundColor = `rgb(${getRandomNumber(
-          0,
-          255
-        )}, ${getRandomNumber(0, 255)}, ${getRandomNumber(0, 255)})`;
+        if (!box.style.backgroundColor) {
+          box.style.backgroundColor = getRandomColor();
+        }
+
+        if (!box.style?.opacity) {
+          box.style.opacity = 0.1;
+        } else if (box.style.opacity < 1) {
+          box.style.opacity = Number(box.style.opacity) + 0.1;
+        }
       });
 
       canvas.appendChild(box);
